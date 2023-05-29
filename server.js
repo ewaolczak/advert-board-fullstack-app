@@ -6,7 +6,7 @@ const connectToDB = require('./db')
 
 // start express server
 const app = express()
-const server = app.listen(8000, () => {
+const server = app.listen(process.env.PORT || 8000, () => {
   console.log('Server is running...');
 })
 
@@ -19,10 +19,13 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }));
 
 app.use(express.static(path.join(__dirname, '/client/build')));
-app.use(express.static(path.join(__dirname, '/public')));
+// app.use(express.static(path.join(__dirname, '/public')));
+
+// add routes
+app.use('/auth', require('./routes/auth.routes'))
 
 app.use((req, res) => {
-  res.status(404).send({ message: 'Not found...' });
+  res.status(404).send({ message: 'Page not found...' });
 });
 
 module.exports = server
