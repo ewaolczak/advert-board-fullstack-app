@@ -1,0 +1,9 @@
+{
+  "name": "advert-board-fullstack-app",
+  "version": "1.0.0",
+  "description": "simple advert board app",
+  "main": "server.js",
+  "repository": "git@github.com:ewaolczak/advert-board-fullstack-app.git",
+  "author": "Ewa Olczak <ewa.olczak@gmail.com>",
+  "license": "MIT"
+}
