@@ -16,15 +16,25 @@ const server = app.listen(process.env.PORT || 8000, () => {
 connectToDB();
 
 // middleware
-app.use(cors());
+if (process.env.NODE_ENV !== 'production') {
+  app.use(
+    cors({
+      origin: ['http://localhost:3000'],
+      credentials: true
+    })
+  );
+}
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(
   session({
     secret: 'xyz456',
-    store: MongoStore.create({ mongoUrl: 'mongodb://localhost:27017/advertsDB' }),
+    store: MongoStore.create({ mongoUrl: 'mongodb://localhost:27017/advertsDB' }), // przy MongoStore.create(mongoose.connection) nie działało
     resave: false,
-    saveUninitialized: false
+    saveUninitialized: false,
+    cookie: {
+      secure: process.env.NODE_ENV == 'production'
+    }
   })
 );
 
