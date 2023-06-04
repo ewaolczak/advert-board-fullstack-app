@@ -1,4 +1,4 @@
-const User = require('../models/user.model');
+const User = require('../models/auth.model');
 const bcrypt = require('bcryptjs');
 const getImageFileType = require('../utils/getImageFileType');
 const fs = require('fs');
@@ -16,7 +16,7 @@ exports.register = async (req, res) => {
       req.file &&
       ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'].includes(fileType) &&
       phone &&
-      typeof phone === 'string' //dlaczego tutaj jest string a w modelu number??
+      typeof phone === 'string' //! dlaczego tutaj jest string a w modelu number??
     ) {
       const userWithLogin = await User.findOne({ login });
       if (userWithLogin) {

@@ -1,4 +1,6 @@
 const Advert = require('../models/advert.model');
+const getImageFileType = require('../utils/getImageFileType');
+const fs = require('fs');
 
 exports.getAll = async (req, res) => {
   try {
@@ -20,12 +22,17 @@ exports.getById = async (req, res) => {
 
 exports.post = async (req, res) => {
   try {
-    const { title, content, price, localisation, seller } = req.body;
+    const { title, content, date, price, localisation, seller } = req.body;
+    const fileType = req.file ? await getImageFileType(req.file) : 'unknown';
     if (
       title &&
       typeof title === 'string' &&
       content &&
       typeof content === 'string' &&
+      date &&
+      typeof date === 'string' &&
+      req.file &&
+      ['image/png', 'image/jpg', 'image/gif'].includes(fileType) &&
       price &&
       typeof price === 'string' && // WHY??? w modelu number, a tu string...
       localisation &&
@@ -36,6 +43,8 @@ exports.post = async (req, res) => {
       const newAdvert = new Advert({
         title: title,
         content: content,
+        date: date,
+        image: req.file.filename,
         price: price,
         localisation: localisation,
         seller: seller
@@ -43,7 +52,12 @@ exports.post = async (req, res) => {
       await newAdvert.save();
       res.status(200).send({ message: 'OK' });
     } else {
-      res.status(400).send({ message: 'Bad request' });
+      if (res.status(400)) {
+        if (req.file) {
+          fs.unlinkSync(`./public/uploads/${req.file.filename}`);
+        }
+        return res.send({ message: 'Bad request' });
+      }
     }
   } catch (err) {
     res.status(500).send({ message: err });
@@ -52,7 +66,8 @@ exports.post = async (req, res) => {
 
 exports.put = async (req, res) => {
   try {
-    const { title, content, price, localisation, seller } = req.body;
+    const { title, content, date, price, localisation, seller } = req.body;
+    const fileType = req.file ? await getImageFileType(req.file) : 'unknown';
     const adv = await Advert.findById(req.params.id);
     if (adv) {
       if (
@@ -60,8 +75,12 @@ exports.put = async (req, res) => {
         typeof title === 'string' &&
         content &&
         typeof content === 'string' &&
+        date &&
+        typeof date === 'string' &&
+        req.file &&
+        ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'].includes(fileType) &&
         price &&
-        typeof price === 'string' && // WHY??? w modelu number, a tu string...
+        typeof price === 'string' && //! WHY??? w modelu number, a tu string...
         localisation &&
         typeof localisation === 'string' &&
         seller &&
@@ -73,6 +92,8 @@ exports.put = async (req, res) => {
             $set: {
               title: title,
               content: content,
+              date: date,
+              image: req.file.filename,
               price: price,
               localisation: localisation,
               seller: seller
@@ -80,7 +101,10 @@ exports.put = async (req, res) => {
           }
         );
         res.status(200).send({ message: 'OK' });
-      } else res.status(400).send({ message: 'Bad request' });
+      } else {
+        fs.unlinkSync(`./public/uploads/${req.file.filename}`);
+        return res.status(400).send({ message: 'Bad request' });
+      }
     } else res.status(404).json({ message: 'Not found' });
   } catch (err) {
     res.status(500).send({ message: err });
