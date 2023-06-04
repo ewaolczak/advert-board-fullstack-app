@@ -41,10 +41,11 @@ app.use(
 );
 
 app.use(express.static(path.join(__dirname, '/client/build')));
-// app.use(express.static(path.join(__dirname, '/public')));
+app.use(express.static(path.join(__dirname, '/public')));
 
 // add routes
 app.use('/auth', require('./routes/auth.routes'));
+app.use('/api', require('./routes/adverts.routes'));
 
 app.use((req, res) => {
   res.status(404).send({ message: 'Page not found...' });
