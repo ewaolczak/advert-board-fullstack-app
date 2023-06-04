@@ -102,10 +102,14 @@ exports.put = async (req, res) => {
         );
         res.status(200).send({ message: 'OK' });
       } else {
-        fs.unlinkSync(`./public/uploads/${req.file.filename}`);
-        return res.status(400).send({ message: 'Bad request' });
+        if (res.status(400)) {
+          if (req.file) {
+            fs.unlinkSync(`./public/uploads/${req.file.filename}`);
+          }
+          return res.send({ message: 'Bad request' });
+        }
       }
-    } else res.status(404).json({ message: 'Not found' });
+    } else res.status(404).send({ message: 'Not found' });
   } catch (err) {
     res.status(500).send({ message: err });
   }
@@ -117,8 +121,19 @@ exports.delete = async (req, res) => {
     if (adv) {
       await Advert.deleteOne({ _id: req.params.id });
       res.send({ message: 'OK' });
-    } else res.status(404).json({ message: 'Not found' });
+    } else res.status(404).send({ message: 'Not found' });
   } catch (err) {
     res.status(500).send({ message: err });
   }
 };
+
+// exports.searchPhrase = async (req, res, next) => {
+//   const { searchPhrase } = req.params;
+//   try {
+//     const adv = await Advert.find({ $text: { $search: searchPhrase } });
+//     if (!adv) return res.status(404).json({ message: 'Ad not found' });
+//     else res.json(adv);
+//   } catch (err) {
+//     res.status(500).json({ message: err });
+//   }
+// };
