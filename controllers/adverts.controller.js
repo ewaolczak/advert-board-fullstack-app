@@ -32,9 +32,9 @@ exports.post = async (req, res) => {
       date &&
       typeof date === 'string' &&
       req.file &&
-      ['image/png', 'image/jpg', 'image/gif'].includes(fileType) &&
+      ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'].includes(fileType) &&
       price &&
-      typeof price === 'string' && // WHY??? w modelu number, a tu string...
+      typeof price === 'string' && //! WHY??? w modelu number, a tu string...
       localisation &&
       typeof localisation === 'string' &&
       seller &&
