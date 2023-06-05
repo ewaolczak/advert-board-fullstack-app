@@ -1,6 +1,6 @@
 const Advert = require('../models/advert.model');
 const getImageFileType = require('../utils/getImageFileType');
-const fs = require('fs');
+const fs = require('fs-extra');
 
 exports.getAll = async (req, res) => {
   try {
@@ -47,7 +47,8 @@ exports.post = async (req, res) => {
         image: req.file.filename,
         price: price,
         localisation: localisation,
-        seller: seller
+        seller: seller,
+        user: req.session.id
       });
       await newAdvert.save();
       res.status(200).send({ message: 'OK' });

@@ -1,7 +1,7 @@
 const User = require('../models/user.model');
 const bcrypt = require('bcryptjs');
 const getImageFileType = require('../utils/getImageFileType');
-const fs = require('fs');
+const fs = require('fs-extra');
 
 exports.register = async (req, res) => {
   try {
@@ -16,25 +16,38 @@ exports.register = async (req, res) => {
       req.file &&
       ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'].includes(fileType) &&
       phone &&
-      typeof phone === 'string' //! dlaczego tutaj jest string a w modelu number??
+      typeof phone === 'string'
     ) {
       const userWithLogin = await User.findOne({ login });
       if (userWithLogin) {
-        const imageDir = `./public/uploads/${userWithLogin._id}/${req.file.filename}`
-        const isExist = fs.existsSync(imageDir)
+        const tempImageDir = `./public/uploads/${req.file.filename}`;
+        const isExist = fs.existsSync(tempImageDir);
         if (isExist) {
-        fs.unlinkSync(imageDir);
-        fs.rmdirSync(`./public/uploads/${userWithLogin._id}`)
-      }
+          fs.unlinkSync(tempImageDir);
+        }
         return res.status(409).send({ message: 'User with this login already exists' });
       }
 
-      const user = await User.create({
+      const user = await new User({
         login,
         password: await bcrypt.hash(password, 10),
         avatar: req.file.filename,
         phone
       });
+
+      //move file
+      const imagePath = `./public/uploads/${req.file.filename}`;
+      const imageDir = `./public/uploads/${user._id}/${req.file.filename}`;
+      fs.moveSync(imagePath, imageDir, (err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
+
+      //update avatar src
+      await user.save();
+      console.log(user.save);
+
       res.status(201).send({ message: `Created user ${user.login}` });
     } else {
       fs.unlinkSync(`./public/uploads/${req.file.filename}`);
@@ -57,9 +70,11 @@ exports.login = async (req, res) => {
         res.status(400).send({ message: 'Login or password is incorrect' });
       } else {
         if (bcrypt.compareSync(password, user.password)) {
-          req.session = { login: user.login, id: user._id };
-          console.log(req.session);
+          req.session.login = user.login;
           res.status(200).send({ message: 'Login successful' });
+          // const user = { login: req.session.user.login, id: req.session.user._id };
+          // console.log(req.session);
+          // res.status(200).send({ message: `Login successful. User: ${user}` });
         } else {
           res.status(400).send({ message: 'Login or password is incorrect' });
         }
