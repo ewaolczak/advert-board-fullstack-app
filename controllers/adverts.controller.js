@@ -127,13 +127,13 @@ exports.delete = async (req, res) => {
   }
 };
 
-// exports.searchPhrase = async (req, res, next) => {
-//   const { searchPhrase } = req.params;
-//   try {
-//     const adv = await Advert.find({ $text: { $search: searchPhrase } });
-//     if (!adv) return res.status(404).json({ message: 'Ad not found' });
-//     else res.json(adv);
-//   } catch (err) {
-//     res.status(500).json({ message: err });
-//   }
-// };
+exports.searchPhrase = async (req, res, next) => {
+  const { searchPhrase } = req.params;
+  try {
+    const adv = await Advert.find({ title: { $regex: searchPhrase, $options: 'i' } });
+    if (!adv) return res.status(404).json({ message: 'Ad not found' });
+    else res.json(adv);
+  } catch (err) {
+    res.status(500).json({ message: err });
+  }
+};

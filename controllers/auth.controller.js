@@ -20,13 +20,13 @@ exports.register = async (req, res) => {
     ) {
       const userWithLogin = await User.findOne({ login });
       if (userWithLogin) {
-        fs.unlinkSync(`./public/uploads/${req.file.filename}`);
-        return (
-          res
-            .status(409)
-            // .fs.unnlinkSync(`./public/uploads/${req.file.filename}`)
-            .send({ message: 'User with this login already exists' })
-        );
+        const imageDir = `./public/uploads/${userWithLogin._id}/${req.file.filename}`
+        const isExist = fs.existsSync(imageDir)
+        if (isExist) {
+        fs.unlinkSync(imageDir);
+        fs.rmdirSync(`./public/uploads/${userWithLogin._id}`)
+      }
+        return res.status(409).send({ message: 'User with this login already exists' });
       }
 
       const user = await User.create({
@@ -57,7 +57,8 @@ exports.login = async (req, res) => {
         res.status(400).send({ message: 'Login or password is incorrect' });
       } else {
         if (bcrypt.compareSync(password, user.password)) {
-          req.session.login = user.login;
+          req.session = { login: user.login, id: user._id };
+          console.log(req.session);
           res.status(200).send({ message: 'Login successful' });
         } else {
           res.status(400).send({ message: 'Login or password is incorrect' });
@@ -73,11 +74,11 @@ exports.login = async (req, res) => {
 
 exports.getUser = async (req, res) => {
   res.send({ message: "Yeah! I'm logged!" });
-  // if (req.session.login) {
-  //   res.send({ login: req.session.login });
-  // } else {
-  //   res.status(401).send({ message: 'You are not authorized' });
-  // }
+  if (req.session.login) {
+    res.send({ login: req.session.login });
+  } else {
+    res.status(401).send({ message: 'You are not authorized' });
+  }
 };
 
 exports.logout = async (req, res) => {

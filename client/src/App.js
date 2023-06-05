@@ -3,9 +3,9 @@ import { Container } from 'react-bootstrap';
 
 //* components
 import Header from './components/views/Header/Header';
+import Home from './components/pages/Home/Home';
 import Footer from './components/views/Footer/Footer';
 import { Route, Routes } from 'react-router-dom';
-import Home from './components/pages/Home/Home';
 
 const App = () => {
   return (
