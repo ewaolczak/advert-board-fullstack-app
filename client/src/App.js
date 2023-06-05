@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container } from 'react-bootstrap';
 
-//* components
+// components
 import Header from './components/views/Header/Header';
 import Home from './components/pages/Home/Home';
 import Footer from './components/views/Footer/Footer';
@@ -13,6 +13,14 @@ const App = () => {
       <Header></Header>
       <Routes>
         <Route path='/' element={<Home />} />
+        <Route path='/ads' />
+        <Route path='/ads/addAdvert' />
+        <Route path='/ads/:id' />
+        <Route path='/ads/editAdvert/:id' />
+        <Route path='/ads/search/:searchPhrase' />
+        <Route path='/register' />
+        <Route path='/login' />
+        <Route path='/logout' />
       </Routes>
       <Footer></Footer>
     </Container>
