@@ -1,11 +1,15 @@
 import React from 'react';
-import { Container } from 'react-bootstrap';
+import { Container, Card } from 'react-bootstrap';
 
 const Footer = () => {
   return (
     <>
       <Container>
-        <h1>Footer</h1>
+      <Card style={{ border: 'none' }}>
+      <Card.Body className='align-self-center text-muted'>
+        Copyright &copy; Advert Board App 2023
+      </Card.Body>
+    </Card>
       </Container>
     </>
   );

@@ -34,7 +34,7 @@ exports.post = async (req, res) => {
       req.file &&
       ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'].includes(fileType) &&
       price &&
-      typeof price === 'string' && //! WHY??? w modelu number, a tu string...
+      typeof price === 'string' &&
       localisation &&
       typeof localisation === 'string' &&
       seller &&
@@ -81,7 +81,7 @@ exports.put = async (req, res) => {
         req.file &&
         ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'].includes(fileType) &&
         price &&
-        typeof price === 'string' && //! WHY??? w modelu number, a tu string...
+        typeof price === 'string' &&
         localisation &&
         typeof localisation === 'string' &&
         seller &&
