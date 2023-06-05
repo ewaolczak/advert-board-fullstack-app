@@ -4,8 +4,8 @@ import { Container } from 'react-bootstrap'
 const Home = () => {
   return (
     <>
-      <Container>
-        <h1>Home Page</h1>
+      <Container className="ms-3">
+        <div>Home Page</div>
       </Container>
     </>
   )
