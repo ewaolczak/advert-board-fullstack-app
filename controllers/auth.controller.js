@@ -70,11 +70,8 @@ exports.login = async (req, res) => {
         res.status(400).send({ message: 'Login or password is incorrect' });
       } else {
         if (bcrypt.compareSync(password, user.password)) {
-          req.session.login = user.login;
-          res.status(200).send({ message: 'Login successful' })
-          // const user = { login: req.session.user.login, id: req.session.user._id };
-          // console.log(req.session);
-          // res.status(200).send({ message: `Login successful. User: ${user}` });
+          const user = { login: req.session.login, id: req.session._id };
+          res.status(200).send({ message: `Login successful. User: ${login}` });
           // .redirect(`/ads/`);
         } else {
           res.status(400).send({ message: 'Login or password is incorrect' });
@@ -85,6 +82,7 @@ exports.login = async (req, res) => {
     }
   } catch (err) {
     res.status(500).send({ message: err });
+    console.log(err);
   }
 };
 
