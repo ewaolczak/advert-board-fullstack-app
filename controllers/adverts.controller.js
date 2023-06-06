@@ -4,7 +4,7 @@ const fs = require('fs-extra');
 
 exports.getAll = async (req, res) => {
   try {
-    res.json(await Advert.find());
+    res.json(await Advert.find().populate('users'));
   } catch (err) {
     res.status(500).send({ message: err });
   }
@@ -12,7 +12,7 @@ exports.getAll = async (req, res) => {
 
 exports.getById = async (req, res) => {
   try {
-    const adv = await Advert.findById(req.params.id);
+    const adv = await Advert.findById(req.params.id).populate('users');
     if (!adv) res.status(404).send({ message: 'Not found' });
     else res.json(adv);
   } catch (err) {
@@ -22,7 +22,7 @@ exports.getById = async (req, res) => {
 
 exports.post = async (req, res) => {
   try {
-    const { title, content, date, price, localisation, seller } = req.body;
+    const { title, content, date, price, localisation, user } = req.body;
     const fileType = req.file ? await getImageFileType(req.file) : 'unknown';
     if (
       title &&
@@ -36,9 +36,7 @@ exports.post = async (req, res) => {
       price &&
       typeof price === 'string' &&
       localisation &&
-      typeof localisation === 'string' &&
-      seller &&
-      typeof seller === 'string'
+      typeof localisation === 'string'
     ) {
       const newAdvert = new Advert({
         title: title,
@@ -47,8 +45,14 @@ exports.post = async (req, res) => {
         image: req.file.filename,
         price: price,
         localisation: localisation,
-        seller: seller,
         user: req.session.id
+      });
+      const imagePath = `./public/uploads/${req.file.filename}`;
+      const imageDir = `./public/uploads/${req.session.id}/${req.file.filename}`;
+      fs.moveSync(imagePath, imageDir, (err) => {
+        if (err) {
+          console.log(err);
+        }
       });
       await newAdvert.save();
       res.status(200).send({ message: 'OK' });
@@ -62,12 +66,13 @@ exports.post = async (req, res) => {
     }
   } catch (err) {
     res.status(500).send({ message: err });
+    console.log(err);
   }
 };
 
 exports.put = async (req, res) => {
   try {
-    const { title, content, date, price, localisation, seller } = req.body;
+    const { title, content, date, price, localisation, user } = req.body;
     const fileType = req.file ? await getImageFileType(req.file) : 'unknown';
     const adv = await Advert.findById(req.params.id);
     if (adv) {
@@ -83,9 +88,7 @@ exports.put = async (req, res) => {
         price &&
         typeof price === 'string' &&
         localisation &&
-        typeof localisation === 'string' &&
-        seller &&
-        typeof seller === 'string'
+        typeof localisation === 'string'
       ) {
         await Advert.updateOne(
           { _id: req.params.id },
@@ -97,10 +100,17 @@ exports.put = async (req, res) => {
               image: req.file.filename,
               price: price,
               localisation: localisation,
-              seller: seller
+              user: req.session.id
             }
           }
         );
+        const imagePath = `./public/uploads/${req.file.filename}`;
+        const imageDir = `./public/uploads/${req.session.id}/${req.file.filename}`;
+      fs.moveSync(imagePath, imageDir, (err) => {
+        if (err) {
+          console.log(err);
+        }
+      });
         res.status(200).send({ message: 'OK' });
       } else {
         if (res.status(400)) {
