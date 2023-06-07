@@ -27,8 +27,8 @@ const Home = () => {
         </div>
         <div className="d-flex flex-row justify-content-between">
           <AdvertBox></AdvertBox>
-          <AdvertBox></AdvertBox>
-          <AdvertBox></AdvertBox>
+          {/* <AdvertBox></AdvertBox>
+          <AdvertBox></AdvertBox> */}
         </div>
       </Container>
     </>
