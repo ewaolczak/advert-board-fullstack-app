@@ -1,4 +1,16 @@
 import shortid from 'shortid';
+import { API_URL } from '../config';
+
+export const fetchAllAdverts = async () => {
+  try {
+    const res = await fetch(`${API_URL}/ads`);
+    const jsonData = await res.json();
+    console.log('jsonData', jsonData);
+  } catch (err) {
+    console.log('error', err);
+    return err;
+  }
+};
 
 //selcters
 export const getAllAdverts = ({ adverts }) => adverts;

@@ -4,7 +4,13 @@ const fs = require('fs-extra');
 
 exports.getAll = async (req, res) => {
   try {
-    res.json(await Advert.find().populate('users'));
+    res.json(
+      await Advert.find().populate({
+        path: 'user',
+        model: 'User',
+        select: '-password'
+      })
+    );
   } catch (err) {
     res.status(500).send({ message: err });
   }
@@ -12,7 +18,7 @@ exports.getAll = async (req, res) => {
 
 exports.getById = async (req, res) => {
   try {
-    const adv = await Advert.findById(req.params.id).populate('users');
+    const adv = await Advert.findById(req.params.id).populate('user');
     if (!adv) res.status(404).send({ message: 'Not found' });
     else res.json(adv);
   } catch (err) {
@@ -32,7 +38,9 @@ exports.post = async (req, res) => {
       date &&
       typeof date === 'string' &&
       req.file &&
-      ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'].includes(fileType) &&
+      ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'].includes(
+        fileType
+      ) &&
       price &&
       typeof price === 'string' &&
       localisation &&
@@ -57,12 +65,8 @@ exports.post = async (req, res) => {
       await newAdvert.save();
       res.status(200).send({ message: 'OK' });
     } else {
-      if (res.status(400)) {
-        if (req.file) {
-          fs.unlinkSync(`./public/uploads/${req.file.filename}`);
-        }
-        return res.send({ message: 'Bad request' });
-      }
+      fs.unlinkSync(`./public/uploads/${req.file.filename}`);
+      return res.status(400).send({ message: 'Bad request' });
     }
   } catch (err) {
     res.status(500).send({ message: err });
@@ -84,7 +88,9 @@ exports.put = async (req, res) => {
         date &&
         typeof date === 'string' &&
         req.file &&
-        ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'].includes(fileType) &&
+        ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'].includes(
+          fileType
+        ) &&
         price &&
         typeof price === 'string' &&
         localisation &&
@@ -106,19 +112,15 @@ exports.put = async (req, res) => {
         );
         const imagePath = `./public/uploads/${req.file.filename}`;
         const imageDir = `./public/uploads/${req.session.id}/${req.file.filename}`;
-      fs.moveSync(imagePath, imageDir, (err) => {
-        if (err) {
-          console.log(err);
-        }
-      });
+        fs.moveSync(imagePath, imageDir, (err) => {
+          if (err) {
+            console.log(err);
+          }
+        });
         res.status(200).send({ message: 'OK' });
       } else {
-        if (res.status(400)) {
-          if (req.file) {
-            fs.unlinkSync(`./public/uploads/${req.file.filename}`);
-          }
-          return res.send({ message: 'Bad request' });
-        }
+        fs.unlinkSync(`./public/uploads/${req.file.filename}`);
+        return res.status(400).send({ message: 'Bad request' });
       }
     } else res.status(404).send({ message: 'Not found' });
   } catch (err) {
@@ -141,7 +143,9 @@ exports.delete = async (req, res) => {
 exports.searchPhrase = async (req, res, next) => {
   const { searchPhrase } = req.params;
   try {
-    const adv = await Advert.find({ title: { $regex: searchPhrase, $options: 'i' } });
+    const adv = await Advert.find({
+      title: { $regex: searchPhrase, $options: 'i' }
+    });
     if (!adv) return res.status(404).json({ message: 'Ad not found' });
     else res.json(adv);
   } catch (err) {
