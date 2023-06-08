@@ -2,23 +2,23 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Col, Container, Row } from 'react-bootstrap';
 import AdvertBox from '../../features/AdvertBox/AdvertBox';
-import {
-  fetchAllAdverts,
-  getAllAdverts,
-  updateAdvert
-} from '../../../redux/advertsRedux';
+import { fetchAllAdverts, getAllAdverts } from '../../../redux/advertsRedux';
 import SearchBar from '../../features/SearchBar/SearchBar';
 // import dateToStr from '../../../utils/dateToStr';
 
 const Home = () => {
   const dispatch = useDispatch();
   const adverts = useSelector(getAllAdverts);
-  console.log(adverts);
+  // console.log(adverts);
+
+  // useEffect(() => {
+  //   fetchAllAdverts();
+  //   dispatch(updateAdvert(adverts));
+  // }, [dispatch, adverts]);
 
   useEffect(() => {
-    fetchAllAdverts();
-    dispatch(updateAdvert(adverts));
-  }, [dispatch, adverts]);
+    dispatch(fetchAllAdverts());
+  }, [dispatch]);
 
   return (
     <>
@@ -34,7 +34,7 @@ const Home = () => {
         <Row className='d-flex flex-row justify-content-between'>
           {adverts.map((advert) => (
             <Col key={advert._id}>
-              <AdvertBox {...advert} />
+              <AdvertBox { ...advert } />
             </Col>
           ))}
           {/* <AdvertBox></AdvertBox>

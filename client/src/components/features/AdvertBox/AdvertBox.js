@@ -1,10 +1,10 @@
 import React from 'react';
 import styles from './AdvertBox.module.scss';
 import { Button, Card } from 'react-bootstrap';
-// import { Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { IMAGES_URL } from '../../../config';
 
-const AdvertBox = ({ _id, title, date, image, user }) => {
+const AdvertBox = ({ _id, title, localisation, image, user }) => {
   return (
     <>
       <div className={`d-flex flex-column ${styles.card_wrapper}`}>
@@ -12,20 +12,17 @@ const AdvertBox = ({ _id, title, date, image, user }) => {
           <Card.Img
             className={styles.card_image}
             variant='top'
-            src={`${IMAGES_URL}/${image}`}></Card.Img>
+            src={`${IMAGES_URL}/${user}/${image}`}></Card.Img>
         </Card>
         <Card.Body className='d-flex flex-column'>
           <Card.Title>{title}</Card.Title>
-          <Card.Subtitle className='fw-bold mt-3'>
-            Seller: <span className='fw-normal'>{user}</span>
+          <Card.Subtitle className='fw-bold mt-1'>
+            Localisation: <span className='fw-normal'>{localisation}</span>
           </Card.Subtitle>
-          <Card.Subtitle className='fw-bold mt-2'>
-            Published: <span className='fw-normal'>{date}</span>
-          </Card.Subtitle>
-          <div className='mt-auto'>
-            <Button variant='primary'>more</Button>
-            {/* <Link to={`/advert/${_id}`}>
-              </Link> */}
+          <div className='mt-3 d-flex justify-content-end'>
+            <Link to={`/ads/${_id}`}>
+            <Button variant='primary'>more details</Button>
+              </Link>
           </div>
         </Card.Body>
       </div>

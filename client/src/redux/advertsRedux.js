@@ -7,24 +7,32 @@ export const getAdvertById = ({ adverts }, advertId) =>
   adverts.find((advert) => advert._id === advertId);
 
 // actions
-const createActionName = (actionName) => `app/adverts/${actionName}`;
+const reducerName = 'adverts';
+const createActionName = (actionName) =>
+  `app/adverts/${reducerName}/${actionName}`;
 const UPDATE_ADVERT = createActionName('UPDATE_ADVERT');
 const ADD_ADVERT = createActionName('ADD_ADVERT');
 
 // action creators
-export const updateAdvert = (payload) => ({ type: UPDATE_ADVERT, payload });
+export const updateAdverts = (payload) => ({ type: UPDATE_ADVERT, payload });
 export const addAdvert = (payload) => ({ type: ADD_ADVERT, payload });
 
-export const fetchAllAdverts = async (adverts) => {
-  try {
-    const res = await fetch(`${API_URL}/ads`);
-    const jsonData = await res.json();
-    console.log('jsonData', jsonData);
-    // return (dispatch) => dispatch(updateAdvert(adverts));
-  } catch (err) {
-    console.log('error', err);
-    return err;
-  }
+export const fetchAllAdverts = () => {
+  return (dispatch) => {
+    fetch(`${API_URL}/ads`)
+      .then((res) => res.json())
+      .then((adverts) => dispatch(updateAdverts(adverts)));
+  };
+
+  // try {
+  //   const res = await fetch(`${API_URL}/ads`);
+  //   const jsonData = await res.json.strin();
+  //   console.log('jsonData', jsonData);
+  //   // return (dispatch) => dispatch(updateAdverts(adverts));
+  // } catch (err) {
+  //   console.log('error', err);
+  //   return err;
+  // }
 };
 
 const advertsReducer = (statePart = [], action) => {

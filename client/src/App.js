@@ -8,6 +8,7 @@ import Footer from './components/pages/Footer/Footer';
 
 // redux
 import { Route, Routes } from 'react-router-dom';
+import AdvertPage from './components/views/AdvertPage/AdvertPage';
 
 const App = () => {
   return (
@@ -15,9 +16,9 @@ const App = () => {
       <Header></Header>
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/ads' element={<Home />}/>
+        <Route path='/ads' element={<Home />} />
         <Route path='/ads/addAdvert' />
-        <Route path='/ads/:id' />
+        <Route path='/ads/:id' element={<AdvertPage />} />
         <Route path='/ads/editAdvert/:id' />
         <Route path='/ads/search/:searchPhrase' />
         <Route path='/register' />
