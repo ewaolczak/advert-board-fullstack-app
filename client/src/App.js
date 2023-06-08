@@ -15,7 +15,7 @@ const App = () => {
       <Header></Header>
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/ads' element={<Home />} />
+        <Route path='/ads' element={<Home />}/>
         <Route path='/ads/addAdvert' />
         <Route path='/ads/:id' />
         <Route path='/ads/editAdvert/:id' />

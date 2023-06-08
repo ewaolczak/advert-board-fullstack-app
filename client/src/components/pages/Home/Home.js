@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Container } from 'react-bootstrap';
+import { Col, Container, Row } from 'react-bootstrap';
 import AdvertBox from '../../features/AdvertBox/AdvertBox';
 import {
   fetchAllAdverts,
@@ -8,10 +8,12 @@ import {
   updateAdvert
 } from '../../../redux/advertsRedux';
 import SearchBar from '../../features/SearchBar/SearchBar';
+// import dateToStr from '../../../utils/dateToStr';
 
 const Home = () => {
   const dispatch = useDispatch();
   const adverts = useSelector(getAllAdverts);
+  console.log(adverts);
 
   useEffect(() => {
     fetchAllAdverts();
@@ -29,11 +31,15 @@ const Home = () => {
           </div>
           <div className='col-4'></div>
         </div>
-        <div className='d-flex flex-row justify-content-between'>
-          <AdvertBox></AdvertBox>
+        <Row className='d-flex flex-row justify-content-between'>
+          {adverts.map((advert) => (
+            <Col key={advert._id}>
+              <AdvertBox {...advert} />
+            </Col>
+          ))}
           {/* <AdvertBox></AdvertBox>
           <AdvertBox></AdvertBox> */}
-        </div>
+        </Row>
       </Container>
     </>
   );
