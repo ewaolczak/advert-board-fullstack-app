@@ -1,13 +1,22 @@
 import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { Container } from 'react-bootstrap';
 import AdvertBox from '../../features/AdvertBox/AdvertBox';
-import { fetchAllAdverts } from '../../../redux/advertsRedux';
+import {
+  fetchAllAdverts,
+  getAllAdverts,
+  updateAdvert
+} from '../../../redux/advertsRedux';
 import SearchBar from '../../features/SearchBar/SearchBar';
 
 const Home = () => {
+  const dispatch = useDispatch();
+  const adverts = useSelector(getAllAdverts);
+
   useEffect(() => {
     fetchAllAdverts();
-  }, []);
+    dispatch(updateAdvert(adverts));
+  }, [dispatch, adverts]);
 
   return (
     <>
