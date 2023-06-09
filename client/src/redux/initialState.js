@@ -1,6 +1,6 @@
 const initialState = {
   adverts: [],
-  // users: null,
+  user: null,
 };
 
 export default initialState;

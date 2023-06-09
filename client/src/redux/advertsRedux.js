@@ -1,7 +1,7 @@
 import shortid from 'shortid';
 import { API_URL } from '../config';
 
-//selcters
+//selctOrs
 export const getAllAdverts = ({ adverts }) => adverts;
 export const getAdvertById = ({ adverts }, advertId) =>
   adverts.find((advert) => advert._id === advertId);
