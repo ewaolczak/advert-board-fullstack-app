@@ -9,7 +9,7 @@ export const getAdvertById = ({ adverts }, advertId) =>
 // actions
 const reducerName = 'adverts';
 const createActionName = (actionName) =>
-  `app/adverts/${reducerName}/${actionName}`;
+  `app/${reducerName}/${actionName}`;
 const UPDATE_ADVERT = createActionName('UPDATE_ADVERT');
 const ADD_ADVERT = createActionName('ADD_ADVERT');
 

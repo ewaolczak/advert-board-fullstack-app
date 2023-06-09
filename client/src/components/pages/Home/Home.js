@@ -33,7 +33,7 @@ const Home = () => {
         <Row className='d-flex flex-row justify-content-between'>
           {adverts.map((advert) => (
             <Col key={advert._id}>
-              <AdvertBox {...advert} />
+              <AdvertBox { ...advert } />
             </Col>
           ))}
           {/* <AdvertBox></AdvertBox>
