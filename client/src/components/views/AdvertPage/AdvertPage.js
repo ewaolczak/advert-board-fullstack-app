@@ -20,12 +20,14 @@ const AdvertPage = () => {
       <Card className='w-50'>
         <Card.Title>{advert.title}:</Card.Title>
         <Card.Img
-          src={`${IMAGES_URL}/${advert.user}/${advert.image}`}></Card.Img>
+          // src={`${IMAGES_URL}/${advert.user}/${advert.image}`}></Card.Img> {/* final code */}
+          src={`${IMAGES_URL}/${advert.image}`}></Card.Img> {/* code for tests */}
         <Card.Body>
           <Card.Text>{advert.content}</Card.Text>
           <Card.Text>Localisation: {advert.localisation}</Card.Text>
           <Card.Text>Published: {advert.date}</Card.Text>
-          <Card.Text>Seller: {advert.user.login}</Card.Text>
+          {/* <Card.Text>Seller: {advert.user.login}</Card.Text> */}
+          <Card.Text>Seller: {advert.user}</Card.Text>
           <Button variant='outline-primary'>edit</Button>
           <Button variant='outline-danger'>delete</Button>
         </Card.Body>

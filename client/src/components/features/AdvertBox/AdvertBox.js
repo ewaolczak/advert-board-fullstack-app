@@ -12,7 +12,8 @@ const AdvertBox = ({ _id, title, localisation, image, user }) => {
           <Card.Img
             className={styles.card_image}
             variant='top'
-            src={`${IMAGES_URL}/${user}/${image}`}></Card.Img>
+            // src={`${IMAGES_URL}/${user}/${image}`}></Card.Img> {/* final code */}
+            src={`${IMAGES_URL}/${image}`}></Card.Img> {/* for tests */}
         </Card>
         <Card.Body className='d-flex flex-column'>
           <Card.Title>{title}</Card.Title>

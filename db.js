@@ -1,5 +1,8 @@
 const mongoose = require('mongoose');
 
+// func for loading example data
+const loadExampleData = require('./exampleData');
+
 const connectToDB = () => {
   //connect to db
   const NODE_ENV = process.env.NODE_ENV;
@@ -16,6 +19,7 @@ const connectToDB = () => {
   // on success
   db.once('open', () => {
     console.log('Connect to the database');
+    loadExampleData();
   });
 
   // on error
