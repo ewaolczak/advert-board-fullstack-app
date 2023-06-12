@@ -10,6 +10,7 @@ import Footer from './components/pages/Footer/Footer';
 // redux
 import { Route, Routes } from 'react-router-dom';
 import AdvertPage from './components/views/AdvertPage/AdvertPage';
+import RegisterPage from './components/pages/RegisterPage/RegisterPage';
 
 const App = () => {
   return (
@@ -22,7 +23,7 @@ const App = () => {
         <Route path='/ads/:id' element={<AdvertPage />} />
         <Route path='/ads/editAdvert/:id' element={<AdvertForm />} />
         <Route path='/ads/search/:searchPhrase' />
-        <Route path='/register' />
+        <Route path='/register' element={<RegisterPage />} />
         <Route path='/login' />
         <Route path='/logout' />
       </Routes>
