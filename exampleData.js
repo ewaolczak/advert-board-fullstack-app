@@ -11,7 +11,7 @@ const loadExampleData = async () => {
       image: 'potted_flower_img.jpg',
       price: 75,
       localisation: 'Gdansk',
-      user: 'Amanda Clark'
+      user: 'amanda.clark'
     },
     {
       title: 'A unique teapot',
@@ -20,7 +20,7 @@ const loadExampleData = async () => {
       image: 'mug_img.jpg',
       price: 45,
       localisation: 'Szczecin',
-      user: 'Jane Doe'
+      user: 'jane.doe'
     },
     {
       title: 'Soft-scented candle',
@@ -29,7 +29,7 @@ const loadExampleData = async () => {
       image: 'candle_img.jpg',
       price: 50,
       localisation: 'Warsaw',
-      user: 'John Doe'
+      user: 'john.doe'
     }
   ];
   const exampleUsers = [
@@ -53,25 +53,31 @@ const loadExampleData = async () => {
     }
   ];
 
-  try {
-    let counterAdverts = await ExampleAdverts.countDocuments();
-    if (counterAdverts === 0) {
-      console.log('No adverts. Loading example data...');
-      await ExampleAdverts.create(exampleAdverts);
-      console.log('Test adverts data has been successfully loaded');
-    }
-  } catch (err) {
-    console.log(`Couldn't load test adverts data`, err);
-  }
+  let userId = null;
+
   try {
     let counterUsers = await ExampleUsers.countDocuments();
     if (counterUsers === 0) {
       console.log('No users. Loading example data...');
-      await ExampleUsers.create(exampleUsers);
+      const users = await ExampleUsers.create(exampleUsers);
       console.log('Test users data has been successfully loaded');
+      userId = users[0]._id;
     }
   } catch (err) {
     console.log(`Couldn't load test users data`, err);
+  }
+
+  try {
+    let counterAdverts = await ExampleAdverts.countDocuments();
+    if (counterAdverts === 0) {
+      console.log('No adverts. Loading example data...');
+      await ExampleAdverts.create(
+        exampleAdverts.map((advert) => ({ ...advert, user: userId }))
+      );
+      console.log('Test adverts data has been successfully loaded');
+    }
+  } catch (err) {
+    console.log(`Couldn't load test adverts data`, err);
   }
 };
 

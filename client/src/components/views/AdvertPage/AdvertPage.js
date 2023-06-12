@@ -31,7 +31,7 @@ const AdvertPage = () => {
           <Card.Text>Localisation: {advert.localisation}</Card.Text>
           <Card.Text>Published: {advert.date}</Card.Text>
           {/* <Card.Text>Seller: {advert.user.login}</Card.Text> */}
-          <Card.Text>Seller: {advert.user}</Card.Text>
+          <Card.Text>Seller: {advert.user._id}</Card.Text>
           <Card.Img
             className={`${styles.avatar_img}`}
             src={`${IMAGES_URL}/amanda_clark_avatar.jpg`}></Card.Img>
