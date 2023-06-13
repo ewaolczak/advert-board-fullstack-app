@@ -12,6 +12,9 @@ import { Route, Routes } from 'react-router-dom';
 import AdvertPage from './components/views/AdvertPage/AdvertPage';
 import RegisterPage from './components/pages/RegisterPage/RegisterPage';
 import LoginPage from './components/pages/LoginPage/LoginPage';
+import LoggedPage from './components/pages/LoggedPage/LoggedPage';
+import PageNotFound from './components/pages/PageNotFound/PageNotFound';
+import LogoutPage from './components/pages/LogoutPage/LogoutPage';
 
 const App = () => {
   return (
@@ -26,7 +29,9 @@ const App = () => {
         <Route path='/ads/search/:searchPhrase' />
         <Route path='/register' element={<RegisterPage />} />
         <Route path='/login' element={<LoginPage />} />
-        <Route path='/logout' />
+        <Route path='/logged' element={<LoggedPage />} />
+        <Route path='/logout' element={<LogoutPage />} />
+        <Route path='*' element={<PageNotFound />} />
       </Routes>
       <Footer></Footer>
     </Container>
