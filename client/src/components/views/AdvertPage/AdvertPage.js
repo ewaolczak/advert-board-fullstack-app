@@ -31,11 +31,11 @@ const AdvertPage = () => {
           <Card.Text>Localisation: {advert.localisation}</Card.Text>
           <Card.Text>Published: {advert.date}</Card.Text>
           {/* <Card.Text>Seller: {advert.user.login}</Card.Text> */}
-          <Card.Text>Seller: {advert.user._id}</Card.Text>
+          <Card.Text>Seller: {advert.user}</Card.Text>
           <Card.Img
             className={`${styles.avatar_img}`}
-            src={`${IMAGES_URL}/amanda_clark_avatar.jpg`}></Card.Img>
-          <Card.Text>Phone: 111111111</Card.Text>
+            src={`${IMAGES_URL}/${advert.user.avatar}`}></Card.Img>
+          <Card.Text>Phone: {advert.user.phone}</Card.Text>
           <Button variant='outline-primary'>edit</Button>
           <Button variant='outline-danger'>delete</Button>
         </Card.Body>
