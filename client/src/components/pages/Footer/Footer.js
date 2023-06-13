@@ -3,7 +3,7 @@ import { Container, Card } from 'react-bootstrap';
 
 const Footer = () => {
   return (
-    <>
+    <div className='fixed-bottom'>
       <Container>
       <Card style={{ border: 'none' }}>
       <Card.Body className='align-self-center text-muted'>
@@ -11,7 +11,7 @@ const Footer = () => {
       </Card.Body>
     </Card>
       </Container>
-    </>
+    </div>
   );
 };
 

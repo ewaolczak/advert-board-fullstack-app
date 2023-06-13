@@ -11,6 +11,7 @@ import Footer from './components/pages/Footer/Footer';
 import { Route, Routes } from 'react-router-dom';
 import AdvertPage from './components/views/AdvertPage/AdvertPage';
 import RegisterPage from './components/pages/RegisterPage/RegisterPage';
+import LoginPage from './components/pages/LoginPage/LoginPage';
 
 const App = () => {
   return (
@@ -24,7 +25,7 @@ const App = () => {
         <Route path='/ads/editAdvert/:id' element={<AdvertForm />} />
         <Route path='/ads/search/:searchPhrase' />
         <Route path='/register' element={<RegisterPage />} />
-        <Route path='/login' />
+        <Route path='/login' element={<LoginPage />} />
         <Route path='/logout' />
       </Routes>
       <Footer></Footer>
