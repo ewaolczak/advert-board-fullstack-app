@@ -53,7 +53,10 @@ const loadExampleData = async () => {
     }
   ];
 
-  let userId = null;
+  let userIds = [];
+
+  await ExampleAdverts.deleteMany();
+  await ExampleUsers.deleteMany();
 
   try {
     let counterUsers = await ExampleUsers.countDocuments();
@@ -61,7 +64,7 @@ const loadExampleData = async () => {
       console.log('No users. Loading example data...');
       const users = await ExampleUsers.create(exampleUsers);
       console.log('Test users data has been successfully loaded');
-      userId = users[0]._id;
+      userIds = users.map((user) => user._id.toString());
     }
   } catch (err) {
     console.log(`Couldn't load test users data`, err);
@@ -72,7 +75,10 @@ const loadExampleData = async () => {
     if (counterAdverts === 0) {
       console.log('No adverts. Loading example data...');
       await ExampleAdverts.create(
-        exampleAdverts.map((advert) => ({ ...advert, user: userId }))
+        exampleAdverts.map((advert, index) => ({
+          ...advert,
+          user: userIds[index]
+        }))
       );
       console.log('Test adverts data has been successfully loaded');
     }

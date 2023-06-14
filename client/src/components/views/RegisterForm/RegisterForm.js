@@ -10,7 +10,7 @@ const RegisterForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    
+
     console.log(login, password, phone, avatar);
   };
 
@@ -19,7 +19,7 @@ const RegisterForm = () => {
       {/* <Row> */}
       {/* <div className='col-3'></div> */}
       <div className='col-12 col-sm-6 mx-auto'>
-        <Form onSubmit={handleSubmit}>
+        <Form onSubmit={handleSubmit} id='formRegister'>
           <Form.Group className='mt-3 controlId' controlId='formLogin'>
             <Row className='align-items-baseline'>
               <div className={`col-3 ${styles.form_label}`}>
@@ -80,7 +80,7 @@ const RegisterForm = () => {
           </Form.Group>
         </Form>
         <div className={styles.form_buttons_container}>
-          <Button variant='primary' type='submit'>
+          <Button variant='primary' type='submit' form='formRegister'>
             Register
           </Button>
         </div>

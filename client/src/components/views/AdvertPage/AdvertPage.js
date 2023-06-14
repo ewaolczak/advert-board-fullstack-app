@@ -23,7 +23,7 @@ const AdvertPage = () => {
           variant='left'
           className={`w-50 ${styles.advert_image}`}
           // src={`${IMAGES_URL}/${advert.user}/${advert.image}`}></Card.Img> {/* final code */}
-          src={`${IMAGES_URL}/${advert.image}`}></Card.Img>{' '}
+          src={`${IMAGES_URL}/${advert.image}`}></Card.Img>
         {/* code for tests */}
         <Card.Body>
           <Card.Title>{advert.title}</Card.Title>
@@ -31,7 +31,7 @@ const AdvertPage = () => {
           <Card.Text>Localisation: {advert.localisation}</Card.Text>
           <Card.Text>Published: {advert.date}</Card.Text>
           {/* <Card.Text>Seller: {advert.user.login}</Card.Text> */}
-          <Card.Text>Seller: {advert.user}</Card.Text>
+          <Card.Text>Seller: {advert.user?.login}</Card.Text>
           <Card.Img
             className={`${styles.avatar_img}`}
             src={`${IMAGES_URL}/${advert.user.avatar}`}></Card.Img>

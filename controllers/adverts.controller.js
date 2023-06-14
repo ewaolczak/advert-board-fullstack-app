@@ -6,7 +6,7 @@ exports.getAll = async (req, res) => {
   try {
     res.json(
       await Advert.find().populate({
-        path: 'users',
+        path: 'user',
         model: 'User',
         select: '-password'
       })
