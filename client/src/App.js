@@ -21,16 +21,16 @@ const App = () => {
     <Container>
       <Header></Header>
       <Routes>
-        <Route path='/' element={<Home />} />
-        <Route path='/ads' element={<Home />} />
-        <Route path='/ads/addAdvert' element={<AdvertForm />} />
-        <Route path='/ads/:id' element={<AdvertPage />} />
-        <Route path='/ads/editAdvert/:id' element={<AdvertForm />} />
-        <Route path='/ads/search/:searchPhrase' />
-        <Route path='/register' element={<RegisterPage />} />
-        <Route path='/login' element={<LoginPage />} />
-        <Route path='/logged' element={<LoggedPage />} />
-        <Route path='/logout' element={<LogoutPage />} />
+        <Route path='/api' element={<Home />} />
+        <Route path='/api/ads' element={<Home />} />
+        <Route path='/api/ads/addAdvert' element={<AdvertForm />} />
+        <Route path='/api/ads/:id' element={<AdvertPage />} />
+        <Route path='/api/ads/editAdvert/:id' element={<AdvertForm />} />
+        <Route path='/api/ads/search/:searchPhrase' />
+        <Route path='/auth/register' element={<RegisterPage />} />
+        <Route path='/auth/login' element={<LoginPage />} />
+        <Route path='/auth/logged' element={<LoggedPage />} />
+        <Route path='/auth/logout' element={<LogoutPage />} />
         <Route path='*' element={<PageNotFound />} />
       </Routes>
       <Footer></Footer>

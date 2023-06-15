@@ -12,10 +12,10 @@ const NavBar = () => {
             <Nav.Link as={NavLink} to='/'>
               Home
             </Nav.Link>
-            <Nav.Link className='ms-2' as={NavLink} to='/register'>
+            <Nav.Link className='ms-2' as={NavLink} to='/auth/register'>
               Register
             </Nav.Link>
-            <Nav.Link className='ms-2' as={NavLink} to='/login'>
+            <Nav.Link className='ms-2' as={NavLink} to='/auth/login'>
               Log in
             </Nav.Link>
           </Nav>
