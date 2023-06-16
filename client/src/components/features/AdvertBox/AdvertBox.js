@@ -21,7 +21,7 @@ const AdvertBox = ({ _id, title, localisation, image, user }) => {
             Localisation: <span className='fw-normal'>{localisation}</span>
           </Card.Subtitle>
           <div className='mt-3 d-flex justify-content-end'>
-            <Link to={`/ads/${_id}`}>
+            <Link to={`api/ads/${_id}`}>
             <Button variant='primary'>more details</Button>
               </Link>
           </div>

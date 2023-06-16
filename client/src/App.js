@@ -21,6 +21,7 @@ const App = () => {
     <Container>
       <Header></Header>
       <Routes>
+        <Route path='/' element={<Home />} />
         <Route path='/api' element={<Home />} />
         <Route path='/api/ads' element={<Home />} />
         <Route path='/api/ads/addAdvert' element={<AdvertForm />} />

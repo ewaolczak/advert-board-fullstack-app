@@ -19,7 +19,7 @@ export const addAdvert = (payload) => ({ type: ADD_ADVERT, payload });
 
 export const fetchAllAdverts = () => {
   return (dispatch) => {
-    fetch(`${API_URL}/ads`)
+    fetch(`${API_URL}/api/ads`)
       .then((res) => res.json())
       .then((adverts) => dispatch(updateAdverts(adverts)));
   };

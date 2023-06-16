@@ -39,8 +39,8 @@ const RegisterForm = () => {
           setStatus('serverError');
         }
       })
-      .catch((res, err) => {
-        res.send({ message: err });
+      .catch(( err) => {
+        setStatus('serverError')
       });
   };
 
