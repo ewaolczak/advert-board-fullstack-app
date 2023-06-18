@@ -1,6 +1,7 @@
 // selectors
 export const getUser = ({ user }) => user;
 
+
 // actions
 const reducerName = 'users';
 const createActionName = (actionName) => `app/${reducerName}/${actionName}`;
@@ -9,7 +10,7 @@ const LOG_OUT = createActionName('LOG_OUT');
 
 // action creators
 export const logIn = (payload) => ({ type: LOG_IN, payload });
-export const logOut = (payload) => ({ type: LOG_OUT });
+export const logOut = () => ({ type: LOG_OUT });
 
 const usersReducer = (statePart = null, action) => {
   switch (action.type) {

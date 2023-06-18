@@ -1,8 +1,13 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { Container, Nav, Navbar } from 'react-bootstrap';
+import { useSelector } from 'react-redux';
+import { getUser } from '../../../redux/usersRedux';
 
 const NavBar = () => {
+  const user = useSelector(getUser);
+  console.log(user);
+
   return (
     <>
       <Navbar expand='lg'>
@@ -12,15 +17,21 @@ const NavBar = () => {
             <Nav.Link as={NavLink} to='/'>
               Home
             </Nav.Link>
-            <Nav.Link className='ms-2' as={NavLink} to='/auth/register'>
-              Register
-            </Nav.Link>
-            <Nav.Link className='ms-2' as={NavLink} to='/auth/login'>
-              Log in
-            </Nav.Link>
-            <Nav.Link className='ms-2' as={NavLink} to='/auth/logout'>
-              Log out
-            </Nav.Link>
+            {!user && (
+              <Nav.Link className='ms-2' as={NavLink} to='/auth/register'>
+                Register
+              </Nav.Link>
+            )}
+            {!user && (
+              <Nav.Link className='ms-2' as={NavLink} to='/auth/login'>
+                Log in
+              </Nav.Link>
+            )}
+            {user && (
+              <Nav.Link className='ms-2' as={NavLink} to='/auth/logout'>
+                Log out
+              </Nav.Link>
+            )}
           </Nav>
         </Container>
       </Navbar>
