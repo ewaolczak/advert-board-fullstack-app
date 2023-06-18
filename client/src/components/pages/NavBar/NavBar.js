@@ -18,6 +18,9 @@ const NavBar = () => {
             <Nav.Link className='ms-2' as={NavLink} to='/auth/login'>
               Log in
             </Nav.Link>
+            <Nav.Link className='ms-2' as={NavLink} to='/auth/logout'>
+              Log out
+            </Nav.Link>
           </Nav>
         </Container>
       </Navbar>

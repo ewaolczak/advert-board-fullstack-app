@@ -1,12 +1,33 @@
-import React from 'react';
-import styles from './LogoutPage.module.scss';
+// import React from 'react';
+// import styles from './LogoutPage.module.scss';
+import { useDispatch } from 'react-redux';
+import { API_URL } from '../../../config';
+import { logOut } from '../../../redux/usersRedux';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const LogoutPage = () => {
-  return (
-    <div>
-      <h3 className={styles.login_header}>You have been successfully logout</h3>
-    </div>
-  );
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const options = {
+      method: 'DELETE'
+    };
+
+    fetch(`${API_URL}/logout`, options)
+      .then(() => {
+        dispatch(logOut());
+        setTimeout(() => {
+          navigate('/');
+        }, 2000);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, [dispatch, navigate]);
+
+  return null;
 };
 
 export default LogoutPage;
