@@ -6,7 +6,7 @@ import usersReducer from './usersRedux';
 
 const subreducers = {
   adverts: advertsReducer,
-  users: usersReducer
+  user: usersReducer
 };
 
 const reducer = combineReducers(subreducers);

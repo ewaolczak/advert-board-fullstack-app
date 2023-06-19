@@ -107,7 +107,9 @@ exports.getUser = async (req, res) => {
 
 exports.logout = async (req, res) => {
   try {
+    console.log(req.session);
     req.session.destroy();
+    console.log(req.session);
     res.send({ message: 'You have been logout' });
   } catch (err) {
     res.status(500).send({ message: err });

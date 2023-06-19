@@ -35,12 +35,14 @@ const RegisterForm = () => {
           setStatus('clientError');
         } else if (res.status === 409) {
           setStatus('loginError');
-        } else {
+        } 
+        else {
           setStatus('serverError');
         }
       })
       .catch(( err) => {
         setStatus('serverError')
+        console.log(err);
       });
   };
 

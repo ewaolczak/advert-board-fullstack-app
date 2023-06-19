@@ -15,7 +15,7 @@ const LogoutPage = () => {
       method: 'DELETE'
     };
 
-    fetch(`${API_URL}/logout`, options)
+    fetch(`${API_URL}/auth/logout`, options)
       .then(() => {
         dispatch(logOut());
         setTimeout(() => {
