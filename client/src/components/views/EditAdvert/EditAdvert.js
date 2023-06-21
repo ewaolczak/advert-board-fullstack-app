@@ -1,15 +1,14 @@
 import React from 'react';
-import styles from './AdvertForm.module.scss';
+import styles from './EditAdvert.module.scss';
 import { Button, Form, Row } from 'react-bootstrap';
 
-const AdvertForm = () => {
+const EditAdvert = () => {
   return (
     <>
       <h3 className={styles.advert_form_header}>Add an advert</h3>
       <Row>
-        <div className='col-3'></div>
-        <div className='col-6'>
-          <Form>
+        <div className='col-12 col-sm-6 mx-auto'>
+          <Form id='formAdvert'>
             <Form.Group className='mt-3'>
               <Row className='align-items-baseline'>
                 <div className={`col-3 ${styles.form_label}`}>
@@ -64,14 +63,14 @@ const AdvertForm = () => {
             </Form.Group>
           </Form>
           <div className={styles.form_buttons_container}>
-            <Button>Add</Button> {/* when adding an advert */}
-            <Button>Save changes</Button> {/* when editing an advert */}
+            <Button variant='primary' type='submit' form='formAdvert'>
+              Save changes
+            </Button>{' '}
           </div>
         </div>
-        <div className='col-3'></div>
       </Row>
     </>
   );
 };
 
-export default AdvertForm;
+export default EditAdvert;

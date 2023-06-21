@@ -28,6 +28,11 @@ const NavBar = () => {
               </Nav.Link>
             )}
             {user && (
+              <Nav.Link className='ms-2' as={NavLink} to='/api/ads/addAdvert'>
+                Add an advert
+              </Nav.Link>
+            )}
+            {user && (
               <Nav.Link className='ms-2' as={NavLink} to='/auth/logout'>
                 Log out
               </Nav.Link>
