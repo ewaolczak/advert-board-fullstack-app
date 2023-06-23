@@ -7,7 +7,7 @@ const advertSchema = new mongoose.Schema({
   image: { type: String, required: true },
   price: { type: Number, required: true },
   localisation: { type: String, required: true },
-  user: { type: String, required: true, ref: 'User' },
+  user: { type: String, required: true, ref: 'User' }
   // searchPhrase: { type: String, required: true }
 });
 

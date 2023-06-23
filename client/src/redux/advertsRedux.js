@@ -1,15 +1,14 @@
 import shortid from 'shortid';
 import { API_URL } from '../config';
 
-//selctOrs
+//selectors
 export const getAllAdverts = ({ adverts }) => adverts;
 export const getAdvertById = ({ adverts }, advertId) =>
   adverts.find((advert) => advert._id === advertId);
 
 // actions
 const reducerName = 'adverts';
-const createActionName = (actionName) =>
-  `app/${reducerName}/${actionName}`;
+const createActionName = (actionName) => `app/${reducerName}/${actionName}`;
 const UPDATE_ADVERT = createActionName('UPDATE_ADVERT');
 const ADD_ADVERT = createActionName('ADD_ADVERT');
 
@@ -23,16 +22,6 @@ export const fetchAllAdverts = () => {
       .then((res) => res.json())
       .then((adverts) => dispatch(updateAdverts(adverts)));
   };
-
-  // try {
-  //   const res = await fetch(`${API_URL}/ads`);
-  //   const jsonData = await res.json.strin();
-  //   console.log('jsonData', jsonData);
-  //   // return (dispatch) => dispatch(updateAdverts(adverts));
-  // } catch (err) {
-  //   console.log('error', err);
-  //   return err;
-  // }
 };
 
 const advertsReducer = (statePart = [], action) => {
