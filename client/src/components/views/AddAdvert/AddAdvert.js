@@ -38,7 +38,7 @@ const AddAdvert = () => {
       addAdvert(title, content, date, image, price, localisation, user.login)
     );
     setStatus('loading');
-    fetch(`${API_URL}/api/ads/addAdvert`, options)
+    fetch(`${API_URL}/api/ads/`, options)
       .then((res) => {
         if (res.status === 200) {
           setStatus('success');
@@ -59,7 +59,7 @@ const AddAdvert = () => {
     <>
       <h3 className={styles.advert_header}>Add an advert</h3>
       <div className='col-12 col-sm-6 mx-auto'>
-        <Form onSubmit={handleSubmit} id='addAdvert'>
+        <Form onSubmit={handleSubmit} id='formAddAdvert'>
           {status === 'success' && (
             <Alert variant='success'>
               <Alert.Heading>Success!</Alert.Heading>
@@ -179,7 +179,7 @@ const AddAdvert = () => {
           </Form.Group>
         </Form>
         <div className={styles.form_buttons_container}>
-          <Button variant='primary' type='submit' form='addAdvert'>
+          <Button variant='primary' type='submit' form='formAddAdvert'>
             Add
           </Button>
         </div>

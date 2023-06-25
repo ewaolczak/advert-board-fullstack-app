@@ -8,13 +8,7 @@ import SearchBar from '../../features/SearchBar/SearchBar';
 const Home = () => {
   const dispatch = useDispatch();
   const adverts = useSelector(getAllAdverts);
-  // console.log(adverts);
-
-  // useEffect(() => {
-  //   fetchAllAdverts();
-  //   dispatch(updateAdvert(adverts));
-  // }, [dispatch, adverts]);
-
+  
   useEffect(() => {
     dispatch(fetchAllAdverts());
   }, [dispatch]);
