@@ -31,7 +31,8 @@ const AddAdvert = () => {
 
     const options = {
       method: 'POST',
-      body: fd
+      body: fd,
+      credentials: 'include'
     };
 
     dispatch(
