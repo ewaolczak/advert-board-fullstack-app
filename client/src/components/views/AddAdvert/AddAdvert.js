@@ -28,6 +28,8 @@ const AddAdvert = () => {
     fd.append('image', image);
     fd.append('price', price);
     fd.append('localisation', localisation);
+    fd.append('userLogin', user.login);
+
 
     const options = {
       method: 'POST',
@@ -36,7 +38,7 @@ const AddAdvert = () => {
     };
 
     dispatch(
-      addAdvert(title, content, date, image, price, localisation, user.login)
+      addAdvert(title, content, date, image, price, localisation, user)
     );
     setStatus('loading');
     fetch(`${API_URL}/api/ads/`, options)

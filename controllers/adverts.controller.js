@@ -1,4 +1,5 @@
 const Advert = require('../models/advert.model');
+const User = require('../models/user.model');
 const getImageFileType = require('../utils/getImageFileType');
 const fs = require('fs-extra');
 
@@ -28,7 +29,7 @@ exports.getById = async (req, res) => {
 
 exports.post = async (req, res) => {
   try {
-    const { title, content, date, price, localisation, user } = req.body;
+    const { title, content, date, price, localisation, userLogin } = req.body;
     const fileType = req.file ? await getImageFileType(req.file) : 'unknown';
     if (
       title &&
@@ -46,6 +47,12 @@ exports.post = async (req, res) => {
       localisation &&
       typeof localisation === 'string'
     ) {
+      const user = await User.findOne({ login: userLogin });
+      console.log(user);
+      if (!user) throw new Error('No user'); //! (!!user) doesn't work
+
+      const userId = user._id.toString();
+
       const newAdvert = new Advert({
         title: title,
         content: content,
@@ -53,10 +60,10 @@ exports.post = async (req, res) => {
         image: req.file.filename,
         price: price,
         localisation: localisation,
-        user: req.session.id
+        user: userId
       });
       const imagePath = `./public/uploads/${req.file.filename}`;
-      const imageDir = `./public/uploads/${req.session.id}/${req.file.filename}`;
+      const imageDir = `./public/uploads/${userId}/${req.file.filename}`;
       fs.moveSync(imagePath, imageDir, (err) => {
         if (err) {
           console.log(err);
