@@ -47,7 +47,7 @@ exports.post = async (req, res) => {
       localisation &&
       typeof localisation === 'string'
     ) {
-      const user = await User.findOne({ login: userLogin });
+      const user = await User.findOne({ login: req.session.user.login });
       console.log(user);
       if (!user) throw new Error('No user'); //! (!!user) doesn't work
 
