@@ -13,6 +13,8 @@ const Home = () => {
     dispatch(fetchAllAdverts());
   }, [dispatch]);
 
+  console.log(adverts);
+
   return (
     <>
       <Container className='ms-3'>
