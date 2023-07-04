@@ -13,7 +13,7 @@ const Home = () => {
     dispatch(fetchAllAdverts());
   }, [dispatch]);
 
-  console.log(adverts);
+  console.log("ADVERTS",adverts);
 
   return (
     <>

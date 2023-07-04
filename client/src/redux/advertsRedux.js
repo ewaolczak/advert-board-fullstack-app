@@ -26,8 +26,10 @@ export const fetchAllAdverts = () => {
 
 const advertsReducer = (statePart = [], action) => {
   switch (action.type) {
-    case UPDATE_ADVERT:
-      return [...action.payload];
+    case UPDATE_ADVERT: {
+      console.log(action.payload);
+      return action.payload;
+    }
     case ADD_ADVERT:
       return [statePart, { ...action.payload, _id: shortid() }];
     default:

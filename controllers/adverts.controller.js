@@ -13,6 +13,7 @@ exports.getAll = async (req, res) => {
       })
     );
   } catch (err) {
+    console.log("get all adverts err - ",err)
     res.status(500).send({ message: err });
   }
 };
@@ -76,8 +77,8 @@ exports.post = async (req, res) => {
       return res.status(400).send({ message: 'Bad request' });
     }
   } catch (err) {
-    res.status(500).send({ message: err });
     console.log(err);
+    res.status(500).send({ message: err });
   }
 };
 
