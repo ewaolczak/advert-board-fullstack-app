@@ -6,15 +6,15 @@ import { getAdvertById } from '../../../redux/advertsRedux';
 import { Button, Card } from 'react-bootstrap';
 import { IMAGES_URL } from '../../../config';
 // import { getUserById } from '../../../redux/userRedux';
-// import { getUser } from '../../../redux/usersRedux';
+import { getUser } from '../../../redux/usersRedux';
 
 const AdvertPage = () => {
   const advertId = useParams();
   const id = advertId.id;
   const advert = useSelector((state) => getAdvertById(state, id));
-  // const user = useSelector(getUser);
+  const user = useSelector(getUser);
   // const userId = useSelector(getUserById);
-  // console.log(userId);
+  console.log(user);
 
   return (
     <div className={`${styles.card_wrapper} d-flex justify-content-center`}>
@@ -31,13 +31,18 @@ const AdvertPage = () => {
           <Card.Text>Localisation: {advert.localisation}</Card.Text>
           <Card.Text>Published: {advert.date}</Card.Text>
           {/* <Card.Text>Seller: {advert.user.login}</Card.Text> */}
-          <Card.Text>Seller: {advert.user?.login}</Card.Text>
+          <Card.Text>Seller: {advert.user.login}</Card.Text>
           <Card.Img
             className={`${styles.avatar_img}`}
             src={`${IMAGES_URL}/${advert.user.avatar}`}></Card.Img>
           <Card.Text>Phone: {advert.user.phone}</Card.Text>
-          <Button variant='outline-primary'>edit</Button>
-          <Button variant='outline-danger'>delete</Button>
+          {user.login === advert.user.login && (
+            <Button variant='outline-primary'>edit</Button>
+          )}
+          {user.login === advert.user.login && (
+            <Button variant='outline-danger'>delete</Button>
+          )}
+          <Button variant='primary'>back</Button>
         </Card.Body>
       </Card>
     </div>

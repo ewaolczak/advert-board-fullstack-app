@@ -5,9 +5,11 @@ import { API_URL } from '../../../config';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../../../redux/usersRedux';
 import { addAdvert } from '../../../redux/advertsRedux';
+import { useNavigate } from 'react-router-dom';
 
 const AddAdvert = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const user = useSelector(getUser);
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
@@ -45,6 +47,9 @@ const AddAdvert = () => {
       .then((res) => {
         if (res.status === 200) {
           setStatus('success');
+          setTimeout(() => {
+            navigate('/');
+          }, 3000);
         } else if (res.status === 400) {
           setStatus('clientError');
         } else {
@@ -66,7 +71,8 @@ const AddAdvert = () => {
           {status === 'success' && (
             <Alert variant='success'>
               <Alert.Heading>Success!</Alert.Heading>
-              <p>You have been successfully registered! You can now log in.</p>
+              <p>Your advert has been successfully added!</p>
+              <p>You will be taken to the homepage in a moment</p>
             </Alert>
           )}
 

@@ -12,8 +12,7 @@ const AdvertBox = ({ _id, title, localisation, image, user }) => {
           <Card.Img
             className={styles.card_image}
             variant='top'
-            src={`${IMAGES_URL}/${user._id}/${image}`}></Card.Img> {/* final code */}
-            {/* src={`${IMAGES_URL}/${image}`}></Card.Img> for tests */}
+            src={`${IMAGES_URL}/${user._id}/${image}`}></Card.Img>
         </Card>
         <Card.Body className='d-flex flex-column'>
           <Card.Title>{title}</Card.Title>
@@ -22,8 +21,8 @@ const AdvertBox = ({ _id, title, localisation, image, user }) => {
           </Card.Subtitle>
           <div className='mt-3 d-flex justify-content-end'>
             <Link to={`api/ads/${_id}`}>
-            <Button variant='primary'>more details</Button>
-              </Link>
+              <Button variant='primary'>more details</Button>
+            </Link>
           </div>
         </Card.Body>
       </div>

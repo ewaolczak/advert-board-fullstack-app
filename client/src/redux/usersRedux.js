@@ -1,6 +1,6 @@
 // selectors
 export const getUser = ({ user }) => user;
-
+export const activeUser = (state) => state.user;
 
 // actions
 const reducerName = 'users';

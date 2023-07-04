@@ -31,6 +31,7 @@ const LoginForm = () => {
         if (res.status === 200) {
           setStatus('success');
           dispatch(logIn({ login }));
+          navigate('/auth/logged');
           setTimeout(() => {
             navigate('/');
           }, 3000);
