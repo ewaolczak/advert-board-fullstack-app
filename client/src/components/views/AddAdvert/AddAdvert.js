@@ -21,7 +21,16 @@ const AddAdvert = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(title, content, date, image, price, localisation, user);
+    console.log(
+      'AddAdvert',
+      title,
+      content,
+      date,
+      image,
+      price,
+      localisation,
+      user
+    );
 
     const fd = new FormData();
     fd.append('title', title);
@@ -32,16 +41,13 @@ const AddAdvert = () => {
     fd.append('localisation', localisation);
     fd.append('userLogin', user.login);
 
-
     const options = {
       method: 'POST',
       body: fd,
       credentials: 'include'
     };
 
-    dispatch(
-      addAdvert(title, content, date, image, price, localisation, user)
-    );
+    dispatch(addAdvert(title, content, date, image, price, localisation, user));
     setStatus('loading');
     fetch(`${API_URL}/api/ads/`, options)
       .then((res) => {
@@ -59,7 +65,7 @@ const AddAdvert = () => {
       })
       .catch((err) => {
         setStatus('serverError');
-        console.log(err);
+        console.log('AddAdvert error: ' ,err);
       });
   };
 
