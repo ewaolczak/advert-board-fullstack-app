@@ -20,9 +20,7 @@ const AdvertPage = () => {
         <Card.Img
           variant='left'
           className={`w-50 ${styles.advert_image}`}
-          // src={`${IMAGES_URL}/${advert.user}/${advert.image}`}></Card.Img> {/* final code */}
-          src={`${IMAGES_URL}/${advert.image}`}></Card.Img>
-        {/* code for tests */}
+          src={`${IMAGES_URL}/${advert.user._id}/${advert.image}`}></Card.Img>{' '}
         <Card.Body>
           <Card.Title>{advert.title}</Card.Title>
           <Card.Text>{advert.content}</Card.Text>
@@ -34,7 +32,12 @@ const AdvertPage = () => {
             src={`${IMAGES_URL}/${advert.user._id}/${advert.user.avatar}`}></Card.Img>
           <Card.Text>Phone: {advert.user.phone}</Card.Text>
           {user.login === advert.user.login && (
-            <Button variant='outline-primary'>edit</Button>
+            <Button
+              variant='outline-primary'
+              as={Link}
+              to='/api/ads/editAdvert/:id'>
+              edit
+            </Button>
           )}
           {user.login === advert.user.login && (
             <Button variant='outline-danger'>delete</Button>
