@@ -28,7 +28,6 @@ const AdvertPage = () => {
           <Card.Text>{advert.content}</Card.Text>
           <Card.Text>Localisation: {advert.localisation}</Card.Text>
           <Card.Text>Published: {advert.date}</Card.Text>
-          {/* <Card.Text>Seller: {advert.user.login}</Card.Text> */}
           <Card.Text>Seller: {advert.user.login}</Card.Text>
           <Card.Img
             className={`${styles.avatar_img}`}

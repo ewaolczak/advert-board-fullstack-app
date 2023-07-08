@@ -6,39 +6,40 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getUser } from '../../../redux/usersRedux';
 import { addAdvert } from '../../../redux/advertsRedux';
 import { useNavigate } from 'react-router-dom';
+import AdvertForm from '../../features/AdvertForm/AdvertForm';
 
 const AddAdvert = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const user = useSelector(getUser);
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [date, setDate] = useState('');
-  const [image, setImage] = useState(null);
-  const [price, setPrice] = useState('');
-  const [localisation, setLocalisation] = useState('');
+  // const [title, setTitle] = useState('');
+  // const [content, setContent] = useState('');
+  // const [date, setDate] = useState('');
+  // const [image, setImage] = useState(null);
+  // const [price, setPrice] = useState('');
+  // const [localisation, setLocalisation] = useState('');
   const [status, setStatus] = useState(null);
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(
-      'AddAdvert',
-      title,
-      content,
-      date,
-      image,
-      price,
-      localisation,
-      user
-    );
+  const handleSubmit = (advert) => {
+    // e.preventDefault();
+    // console.log(
+    //   'AddAdvert',
+    //   title,
+    //   content,
+    //   date,
+    //   image,
+    //   price,
+    //   localisation,
+    //   user
+    // );
 
     const fd = new FormData();
-    fd.append('title', title);
-    fd.append('content', content);
-    fd.append('date', date);
-    fd.append('image', image);
-    fd.append('price', price);
-    fd.append('localisation', localisation);
+    fd.append('title', advert.title);
+    fd.append('content', advert.content);
+    fd.append('date', advert.date);
+    fd.append('image', advert.image);
+    fd.append('price', advert.price);
+    fd.append('localisation', advert.localisation);
     fd.append('userLogin', user.login);
 
     const options = {
@@ -47,7 +48,7 @@ const AddAdvert = () => {
       credentials: 'include'
     };
 
-    dispatch(addAdvert(title, content, date, image, price, localisation, user));
+    dispatch(addAdvert(advert, user));
     setStatus('loading');
     fetch(`${API_URL}/api/ads/`, options)
       .then((res) => {
@@ -65,14 +66,15 @@ const AddAdvert = () => {
       })
       .catch((err) => {
         setStatus('serverError');
-        console.log('AddAdvert error: ' ,err);
+        console.log('AddAdvert error: ', err);
       });
   };
 
   return (
     <>
       <h3 className={styles.advert_header}>Add an advert</h3>
-      <div className='col-12 col-sm-6 mx-auto'>
+      <AdvertForm action={handleSubmit} actionText='Add new advert' />
+      {/* <div className='col-12 col-sm-6 mx-auto'>
         <Form onSubmit={handleSubmit} id='formAddAdvert'>
           {status === 'success' && (
             <Alert variant='success'>
@@ -198,7 +200,7 @@ const AddAdvert = () => {
             Add
           </Button>
         </div>
-      </div>
+      </div> */}
     </>
   );
 };

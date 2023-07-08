@@ -1,0 +1,19 @@
+.form_label {
+  text-align: right;
+}
+
+.form_placeholder {
+  font-size: 14px;
+  font-style: italic;
+}
+
+.form_buttons_container {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: end;
+
+  Button {
+    margin-left: 10px;
+  }
+}
