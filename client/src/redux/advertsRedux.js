@@ -12,11 +12,13 @@ const createActionName = (actionName) => `app/${reducerName}/${actionName}`;
 const UPDATE_ADVERT = createActionName('UPDATE_ADVERT');
 const ADD_ADVERT = createActionName('ADD_ADVERT');
 const EDIT_ADVERT = createActionName('EDIT_ADVERT');
+const DELETE_ADVERT = createActionName('DELETE_ADVERT');
 
 // action creators
 export const updateAdverts = (payload) => ({ type: UPDATE_ADVERT, payload });
 export const addAdvert = (payload) => ({ type: ADD_ADVERT, payload });
 export const editAdvert = (payload) => ({ type: EDIT_ADVERT, payload });
+export const deleteAdvert = (payload) => ({ type: DELETE_ADVERT, payload });
 
 export const fetchAllAdverts = () => {
   return (dispatch) => {
@@ -41,6 +43,8 @@ const advertsReducer = (statePart = [], action) => {
           : advert
       );
     }
+    case DELETE_ADVERT:
+      return statePart.filter((advert) => advert._id !== action.payload);
     default:
       return statePart;
   }

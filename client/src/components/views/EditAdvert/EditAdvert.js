@@ -74,7 +74,7 @@ const EditAdvert = () => {
 
   return (
     <>
-      <h3 className={styles.advert_form_header}>Add an advert</h3>
+      <h3 className={styles.advert_form_header}>Edit an advert</h3>
 
       <div className='col-12 col-sm-6 mx-auto'>
         <Form onSubmit={handleSubmit} id='formAddAdvert'>

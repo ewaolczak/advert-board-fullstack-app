@@ -1,21 +1,45 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styles from './AdvertPage.module.scss';
 import { useSelector } from 'react-redux';
-import { Link, useParams } from 'react-router-dom';
-import { getAdvertById } from '../../../redux/advertsRedux';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { getAdvertById, updateAdverts } from '../../../redux/advertsRedux';
 import { Button, Card } from 'react-bootstrap';
-import { IMAGES_URL } from '../../../config';
+import { API_URL, IMAGES_URL } from '../../../config';
 import { getUser } from '../../../redux/usersRedux';
+import ModalDelete from '../../features/ModalDelete/ModalDelete';
 
 const AdvertPage = () => {
   const advertId = useParams();
   const id = advertId.id;
   const advert = useSelector((state) => getAdvertById(state, id));
+  const navigate = useNavigate();
   const user = useSelector(getUser);
   console.log('AdvertPage user: ', user);
 
+  const [showModal, setShowModal] = useState(false);
+  const handleClose = () => setShowModal(false);
+  const handleShow = () => setShowModal(true);
+
+  const handleDelete = (e) => {
+    e.preventDefault();
+    const options = {
+      method: 'DELETE',
+      credentials: 'include'
+    };
+    fetch(`${API_URL}/api/ads/`, options);
+    updateAdverts();
+    navigate('/');
+  };
+
   return (
     <div className={`${styles.card_wrapper} d-flex justify-content-center`}>
+      {showModal && (
+        <ModalDelete
+          showModal={showModal}
+          handleClose={handleClose}
+          handleDelete={handleDelete}
+        />
+      )}
       <Card className='border-0 d-flex flex-row'>
         <Card.Img
           variant='left'
@@ -40,7 +64,9 @@ const AdvertPage = () => {
             </Button>
           )}
           {user.login === advert.user.login && (
-            <Button variant='outline-danger'>delete</Button>
+            <Button variant='outline-danger' onClick={handleShow}>
+              delete
+            </Button>
           )}
           <Button variant='primary' as={Link} to='/'>
             back
