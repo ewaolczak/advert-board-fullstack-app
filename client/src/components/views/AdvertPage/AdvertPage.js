@@ -2,7 +2,11 @@ import React, { useState } from 'react';
 import styles from './AdvertPage.module.scss';
 import { useSelector } from 'react-redux';
 import { Link, useNavigate, useParams } from 'react-router-dom';
-import { getAdvertById, updateAdverts } from '../../../redux/advertsRedux';
+import {
+  deleteAdvert,
+  getAdvertById,
+  updateAdverts
+} from '../../../redux/advertsRedux';
 import { Button, Card } from 'react-bootstrap';
 import { API_URL, IMAGES_URL } from '../../../config';
 import { getUser } from '../../../redux/usersRedux';
@@ -27,6 +31,7 @@ const AdvertPage = () => {
       credentials: 'include'
     };
     fetch(`${API_URL}/api/ads/`, options);
+    // deleteAdvert()
     updateAdverts();
     navigate('/');
   };
@@ -55,15 +60,15 @@ const AdvertPage = () => {
             className={`${styles.avatar_img}`}
             src={`${IMAGES_URL}/${advert.user._id}/${advert.user.avatar}`}></Card.Img>
           <Card.Text>Phone: {advert.user.phone}</Card.Text>
-          {user.login === advert.user.login && (
+          {user?.login === advert.user.login && (
             <Button
               variant='outline-primary'
               as={Link}
-              to='/api/ads/editAdvert/:id'>
+              to={`/api/ads/editAdvert/${id}`}>
               edit
             </Button>
           )}
-          {user.login === advert.user.login && (
+          {user?.login === advert.user.login && (
             <Button variant='outline-danger' onClick={handleShow}>
               delete
             </Button>

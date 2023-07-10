@@ -10,22 +10,22 @@ import { API_URL } from '../../../config';
 const EditAdvert = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { _id } = useParams();
-  const advert = useSelector((state) => getAdvertById(state, _id));
+  const { id } = useParams();
+  const advert = useSelector((state) => getAdvertById(state, id));
   const user = useSelector(getUser);
-  const [title, setTitle] = useState('');
-  const [content, setContent] = useState('');
-  const [date, setDate] = useState('');
-  const [image, setImage] = useState(null);
-  const [price, setPrice] = useState('');
-  const [localisation, setLocalisation] = useState('');
+  const [title, setTitle] = useState(advert.title || '');
+  const [content, setContent] = useState(advert.content || '');
+  const [date, setDate] = useState(advert.date || '');
+  const [image, setImage] = useState(advert.image);
+  const [price, setPrice] = useState(advert.price || '');
+  const [localisation, setLocalisation] = useState(advert.localisation || '');
   const [status, setStatus] = useState(null);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(
       'EditAdvert',
-      _id,
+      id,
       title,
       content,
       date,
@@ -50,7 +50,7 @@ const EditAdvert = () => {
       credentials: 'include'
     };
 
-    dispatch(editAdvert(...advert, _id));
+    dispatch(editAdvert({ ...advert }));
     setStatus('loading');
     fetch(`${API_URL}/api/ads/`, options)
       .then((res) => {
@@ -67,9 +67,24 @@ const EditAdvert = () => {
         }
       })
       .catch((err) => {
+        console.log('EditAdvert error: ', err);
         setStatus('serverError');
-        console.log('AddAdvert error: ', err);
       });
+  };
+
+  const handleRemoveImage = async () => {
+    try {
+      const options = {
+        method: 'PUT',
+        credentials: 'include'
+      };
+
+      const res = await fetch(`${API_URL}/api/ads/${id}/remove-image`, options);
+      // const res = await axios.put(`${API_URL}/api/ads/${id}/remove-image`);
+    } catch (error) {
+      console.log(error, error.response);
+    }
+    setImage(null);
   };
 
   return (
@@ -118,7 +133,7 @@ const EditAdvert = () => {
                 <Form.Control
                   className={`${styles.form_placeholder}`}
                   type='text'
-                  value={advert.title}
+                  value={title}
                   onChange={(e) => setTitle(e.target.value)}
                   placeholder='type a title'></Form.Control>
               </div>
@@ -134,25 +149,33 @@ const EditAdvert = () => {
                   className={`${styles.form_placeholder}`}
                   as='textarea'
                   rows={5}
-                  value={advert.content}
+                  value={content}
                   onChange={(e) => setContent(e.target.value)}
                   placeholder='type a description'></Form.Control>
               </div>
             </Row>
           </Form.Group>
-          <Form.Group className='mt-3' controlId='formImage'>
-            <Row className='align-items-baseline'>
-              <div className={`col-3 ${styles.form_label}`}>
-                <Form.Label>Image:</Form.Label>
-              </div>
-              <div className={`col-9 ${styles.form_label}`}>
-                <Form.Control
-                  className={`${styles.form_placeholder}`}
-                  type='file'
-                  onChange={(e) => setImage(e.target.files[0])}></Form.Control>
-              </div>
-            </Row>
-          </Form.Group>
+          {image ? (
+            <Button variant='danger' onClick={handleRemoveImage}>
+              Usuń
+            </Button>
+          ) : (
+            <Form.Group className='mt-3' controlId='formImage'>
+              <Row className='align-items-baseline'>
+                <div className={`col-3 ${styles.form_label}`}>
+                  <Form.Label>Image:</Form.Label>
+                </div>
+                <div className={`col-9 ${styles.form_label}`}>
+                  <Form.Control
+                    className={`${styles.form_placeholder}`}
+                    type='file'
+                    onChange={(e) =>
+                      setImage(e.target.files[0])
+                    }></Form.Control>
+                </div>
+              </Row>
+            </Form.Group>
+          )}
           <Form.Group className='mt-3' controlId='formPrice'>
             <Row className='align-items-baseline'>
               <div className={`col-3 ${styles.form_label}`}>
@@ -162,7 +185,7 @@ const EditAdvert = () => {
                 <Form.Control
                   className={`${styles.form_placeholder}`}
                   type='text'
-                  value={advert.price}
+                  value={price}
                   onChange={(e) => setPrice(e.target.value)}
                   placeholder='type a price'></Form.Control>
               </div>
@@ -177,7 +200,7 @@ const EditAdvert = () => {
                 <Form.Control
                   className={`${styles.form_placeholder}`}
                   type='text'
-                  value={advert.localisation}
+                  value={localisation}
                   onChange={(e) => setLocalisation(e.target.value)}
                   placeholder='type your localisation'></Form.Control>
               </div>

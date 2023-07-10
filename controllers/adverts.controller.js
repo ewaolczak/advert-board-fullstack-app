@@ -13,7 +13,7 @@ exports.getAll = async (req, res) => {
       })
     );
   } catch (err) {
-    console.log("get all adverts err - ",err)
+    console.log('get all adverts err - ', err);
     res.status(500).send({ message: err });
   }
 };
@@ -122,7 +122,7 @@ exports.put = async (req, res) => {
         const imageDir = `./public/uploads/${req.session.id}/${req.file.filename}`;
         fs.moveSync(imagePath, imageDir, (err) => {
           if (err) {
-            console.log(err);
+            console.log('exports.put controller error', err);
           }
         });
         res.status(200).send({ message: 'OK' });
@@ -132,7 +132,29 @@ exports.put = async (req, res) => {
       }
     } else res.status(404).send({ message: 'Not found' });
   } catch (err) {
+    console.log('exports.put controller', err);
     res.status(500).send({ message: err });
+  }
+};
+
+exports.removeImage = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const advert = await Advert.findById(id);
+
+    const fileDir = `./public/uploads/${advert.user.toString()}/${
+      advert.image
+    }`;
+    const isFileExists = await fs.exists(fileDir);
+    if (advert.image && isFileExists) {
+      await fs.unlinkSync(fileDir);
+    }
+
+    await Advert.findByIdAndUpdate(id, { image: '' });
+    return true;
+  } catch (error) {
+    console.log(error);
+    return error;
   }
 };
 
